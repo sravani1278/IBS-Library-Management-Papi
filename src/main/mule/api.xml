@@ -40,7 +40,15 @@
 		<flow-ref doc:name="Flow Reference" doc:id="e2a5d19b-29cd-44a6-8843-210a6f06394f" name="ibs-library-impl-papiFlow-get-library-by-id"/>
     </flow>
     <flow name="post:\books:application\json:ibs-libraray-management-papi-config">
-        <logger level="INFO" message="post:\books:application\json:ibs-libraray-management-papi-config" />
+		<logger level="INFO" doc:name="Logger" doc:id="6a8b6d11-f8cd-4b56-9ae2-413b155b2209" message='#["*********post reached************"]'/>
+		<ee:transform doc:name="Transform Message" doc:id="c3f15794-339d-423e-8b9d-654bb565a376" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
 		<flow-ref doc:name="Flow Reference" doc:id="e2127b8e-fecf-4f23-b25b-9ee11614bb44" name="ibs-books-implFlow-create-new-book"/>
     </flow>
 </mule>
