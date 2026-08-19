@@ -16,7 +16,7 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 	"client_id" : "7bdc93931c5a4e5c8b3de6199f357118"
 }]]]></http:headers>
 		</http:request>
-		<logger level="INFO" doc:name="End Logger" doc:id="d76554c1-11e2-45f7-abe5-aca6dc2a8fdd" message='#["After system-api request call"]' />
+		<logger level="INFO" doc:name=" Logger" doc:id="d76554c1-11e2-45f7-abe5-aca6dc2a8fdd" message='#[payload]' />
 		<ee:transform doc:name="System api call repsonse" doc:id="4070315a-12d3-46e2-be69-c3a6f25c2f8c" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
@@ -33,5 +33,6 @@ output application/json
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="0f5c3c63-53dc-4a7a-b269-fce268443b13" message="#[payload]"/>
 	</flow>
 </mule>

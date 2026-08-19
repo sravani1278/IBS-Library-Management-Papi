@@ -17,6 +17,7 @@
     </flow>
     <flow name="get:\Libraries:ibs-libraray-management-papi-config">
         <logger level="INFO" doc:name="Start Logger" doc:id="ef5e471a-6ce4-495a-a161-0365b7b121c1" message='#["Process-api get libraries -Started flow"]'/>
+		<flow-ref doc:name="Flow Reference" doc:id="cbb98b39-6efe-462f-a77d-dc3605195975" name="ibs-library-impl-papiFlow-get-Libraries"/>
     </flow>
     <flow name="get:\books:ibs-libraray-management-papi-config">
         <ee:transform doc:name="Transform Message">
