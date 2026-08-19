@@ -54,12 +54,13 @@ output application/json
         </ee:transform>
     </flow>
     <flow name="get:\Libraries\(libraryID):ibs-libraray-management-papi-config">
-        <ee:transform doc:name="Transform Message">
+        <logger level="INFO" message="get:\Libraries\(libraryID):ibs-libraray-management-papi-config" />
+		<ee:transform doc:name="Transform Message">
             <ee:variables>
                 <ee:set-variable variableName="libraryID">attributes.uriParams.'libraryID'</ee:set-variable>
             </ee:variables>
         </ee:transform>
-        <logger level="INFO" message="get:\Libraries\(libraryID):ibs-libraray-management-papi-config" />
+		<flow-ref doc:name="Flow Reference" doc:id="e2a5d19b-29cd-44a6-8843-210a6f06394f" name="ibs-library-impl-papiFlow-get-library-by-id"/>
     </flow>
     <flow name="post:\books:application\json:ibs-libraray-management-papi-config">
         <logger level="INFO" message="post:\books:application\json:ibs-libraray-management-papi-config" />

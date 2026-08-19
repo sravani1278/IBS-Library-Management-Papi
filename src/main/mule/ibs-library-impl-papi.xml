@@ -35,4 +35,28 @@ output application/json
 		</ee:transform>
 		<logger level="INFO" doc:name="Logger" doc:id="0f5c3c63-53dc-4a7a-b269-fce268443b13" message="#[payload]"/>
 	</flow>
+	<flow name="ibs-library-impl-papiFlow-get-library-by-id" doc:id="eccf51d3-4ef7-44e6-85fb-7bd30de20a4f" >
+		<logger level="INFO" doc:name="start Logger" doc:id="6286581f-9249-4391-bde5-9c7bc2bfdb77" message='#["Before system-api request call"]' />
+		<http:request method="GET" doc:name="Get Libraries system api http Request call" doc:id="f0f59f60-937d-431e-b8e2-bf48922fea8c" url="https://ibs-library-management-sapi-y2xvhu.5sc6y6-3.usa-e2.cloudhub.io/api/Libraries/{libraryID}" >
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"x-correlation-id" : "2121111444",
+	"client_secret" : "2c5271FE1bEB4D1A915FAADB189015aa",
+	"client_id" : "7bdc93931c5a4e5c8b3de6199f357118"
+}]]]></http:headers>
+			<http:uri-params ><![CDATA[#[{
+	"libraryID" : vars.libraryID
+}]]]></http:uri-params>
+		</http:request>
+		<logger level="INFO" doc:name=" Logger" doc:id="8017f437-5a76-4fff-8e5d-99116347394d" message="#[payload]" />
+		<ee:transform doc:name="Transform Message" doc:id="70516ac1-5c8e-4c9b-a10b-4d7114e09b01" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
 </mule>
