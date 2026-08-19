@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="ibs-books-implFlow-create-new-book" doc:id="292e2f92-b0f6-4070-a213-b7c0543a8dcb" >
+		<logger level="INFO" doc:name="start Logger" doc:id="34725896-f10d-4f14-91ba-d05128e171f5" message='#["Before system-api request call"]' />
+		<http:request method="POST" doc:name="Get Libraries system api http Request call" doc:id="b0ee6cea-48d0-43b8-95b2-3289a63685c2" url="https://ibs-library-management-sapi-y2xvhu.5sc6y6-3.usa-e2.cloudhub.io/api/books" >
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"x-correlation-id" : "2121111444",
+	"client_secret" : "2c5271FE1bEB4D1A915FAADB189015aa",
+	"client_id" : "7bdc93931c5a4e5c8b3de6199f357118"
+}]]]></http:headers>
+		</http:request>
+		<logger level="INFO" doc:name=" Logger" doc:id="9f61c4ca-07fb-43fd-bc28-c1abfefeb1d5" message="#[payload]" />
+		<ee:transform doc:name="Transform Message" doc:id="c4a0de1c-73d4-4586-8b3a-ea358590ae9c" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	bookCode: payload.bookCode
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="ibs-books-implFlow-get-book-by-rating-and-librarycode" doc:id="b906380e-c3c2-4dad-ab11-4e4e3723e434" >
+		<logger level="INFO" doc:name="start Logger" doc:id="0e674845-70d4-418c-a921-dfa52494879f" message='#["Before system-api request call"]' />
+		<http:request method="GET" doc:name="Get Libraries system api http Request call" doc:id="579ff1c9-1783-4ab2-abc5-e7de410ae9aa" url="https://ibs-library-management-sapi-y2xvhu.5sc6y6-3.usa-e2.cloudhub.io/api/books" >
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"x-correlation-id" : "2121111444",
+	"client_secret" : "2c5271FE1bEB4D1A915FAADB189015aa",
+	"client_id" : "7bdc93931c5a4e5c8b3de6199f357118"
+}]]]></http:headers>
+			<http:query-params ><![CDATA[#[{
+	rating: vars.ratingvar,
+	libraryCode: vars.libraryCodevar
+}]]]></http:query-params>
+		</http:request>
+		<logger level="INFO" doc:name=" Logger" doc:id="0fa7bfe1-8e1f-486c-b8ec-e582e1aaec71" message="#[payload]" />
+		<ee:transform doc:name="Transform Message" doc:id="874839e5-ccb7-40a6-b6aa-dd2d4f714479" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

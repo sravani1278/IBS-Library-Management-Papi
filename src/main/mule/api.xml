@@ -20,38 +20,15 @@
 		<flow-ref doc:name="Flow Reference" doc:id="cbb98b39-6efe-462f-a77d-dc3605195975" name="ibs-library-impl-papiFlow-get-Libraries"/>
     </flow>
     <flow name="get:\books:ibs-libraray-management-papi-config">
-        <ee:transform doc:name="Transform Message">
+        <ee:transform doc:name="Transform Message" doc:id="bbbd0f63-4d26-4685-a4d6-48cc8d434138">
             <ee:message>
-                <ee:set-payload><![CDATA[%dw 2.0
-output application/json
----
-{
-  libraryCode: "IBS112",
-  books: [
-    {
-      bookCode: "8K666",
-      title: "Mulesoft Mastery",
-      Author: "Salesforce",
-      bookCategory: "Tech",
-      readTimeInHrs: 65,
-      rentalPrice: "200Rs",
-      rating: 4,
-      bestSeller: "Yes"
-    }, 
-    {
-      bookCode: "8K566",
-      title: "The Half",
-      Author: "Amazon",
-      bookCategory: "Novel",
-      readTimeInHrs: 15,
-      rentalPrice: "100Rs",
-      rating: 4,
-      bestSeller: "Yes"
-    }
-  ]
-} as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
             </ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="ratingvar" ><![CDATA[attributes.queryParams.rating]]></ee:set-variable>
+				<ee:set-variable variableName="libraryCodevar" ><![CDATA[attributes.queryParams.libraryCode]]></ee:set-variable>
+			</ee:variables>
         </ee:transform>
+		<flow-ref doc:name="Flow Reference" doc:id="eae1a3d2-ce55-4c08-9d79-f24be9b3d0f5" name="ibs-books-implFlow-get-book-by-rating-and-librarycode"/>
     </flow>
     <flow name="get:\Libraries\(libraryID):ibs-libraray-management-papi-config">
         <logger level="INFO" message="get:\Libraries\(libraryID):ibs-libraray-management-papi-config" />
@@ -64,5 +41,6 @@ output application/json
     </flow>
     <flow name="post:\books:application\json:ibs-libraray-management-papi-config">
         <logger level="INFO" message="post:\books:application\json:ibs-libraray-management-papi-config" />
+		<flow-ref doc:name="Flow Reference" doc:id="e2127b8e-fecf-4f23-b25b-9ee11614bb44" name="ibs-books-implFlow-create-new-book"/>
     </flow>
 </mule>

@@ -15,6 +15,6 @@ http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/sc
     <apikit:config name="ibs-libraray-management-papi-config" api="ibs-libraray-management-papi.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
 	<configuration doc:name="Configuration" doc:id="c05f0fb8-2e45-4bb5-969f-ff2aebd0525b" defaultErrorHandler-ref="global-error-handler" />
 	<configuration-properties doc:name="Configuration properties" doc:id="068adf08-3d3f-44c5-a6c4-7072721125c7" file="properties/${env}.yaml" />
-	<api-gateway:autodiscovery apiId="${api.id}" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="89087d5f-eec0-4c02-bfda-330c66f56b5c" flowRef="ibs-libraray-management-papi-main" />
+	<api-gateway:autodiscovery apiId="${api.id}" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="024e6b22-06d5-462a-8388-56c9c1f26ee4" flowRef="ibs-libraray-management-papi-main" />
 	
 </mule>
