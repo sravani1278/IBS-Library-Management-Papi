@@ -1,0 +1,71 @@
+#%RAML 1.0
+title: Ibs-Libraray-Management-Papi
+baseUri: http///localhost:8081/ibs-papi
+mediaType: 
+- application/json
+protocols:
+  - HTTP
+
+/Libraries:
+  get:
+    responses:
+      200:
+        body:
+           application/json:
+            type: object
+            example:
+              {
+                "libraryCode": "IBS212",
+                 "libraryBranch": "Hyderabad"
+              }
+      404:
+        body:
+          application/json:
+            type: object
+            example:
+              {
+                "code": 404,
+                "message": "Not found" 
+              } 
+  /{libraryID}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: object
+        404:
+          body:
+            application/json:
+              type: object
+          
+/books:
+  post:
+    body:
+      application/json:
+        type: object
+    responses:
+      201:
+        body:
+          application/json:
+            type: object
+      404:
+        body:
+          application/json:
+            type:  object
+  get:
+    responses:
+      200:
+        description: Success response - got the book by query parameter
+        body:
+          application/json:
+            type: object
+            example: !include examples/get-book-info-basedon-rating.json
+      404:
+        description: "Bad request"
+        body:
+          application/json:
+            type:  object
+
+
+             

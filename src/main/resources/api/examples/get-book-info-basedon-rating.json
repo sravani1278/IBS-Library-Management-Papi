@@ -1,0 +1,26 @@
+ {
+                "libraryCode": "IBS112",
+                "books": [{
+                  "bookCode": "8K666",
+                  "title": "Mulesoft Mastery",
+                  "Author": "Salesforce",
+                  "bookCategory": "Tech",
+                  "readTimeInHrs": 65,
+                  "rentalPrice": "200Rs",
+                  "rating": 4,
+                  "bestSeller": "Yes"
+                },
+                {
+                  "bookCode": "8K566",
+                  "title": "The Half",
+                  "Author": "Amazon",
+                  "bookCategory": "Novel",
+                  "readTimeInHrs": 15,
+                  "rentalPrice": "100Rs",
+                  "rating": 4,
+                  "bestSeller": "Yes"
+                }
+                ]
+
+}
+     
