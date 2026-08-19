@@ -1,0 +1,13 @@
+http:
+  port: "8081"
+  path: "/api/*"
+  
+db:
+  host: "bym7qj4m1g9wecpihg55-mysql.services.clever-cloud.com"
+  port: "3306"
+  user: "uv6rqrqs7uxjxxfh"
+  password: "Tn6oo8zYSJTt0l72322n"
+  database: "bym7qj4m1g9wecpihg55"
+  
+api:
+   id: "21096667"

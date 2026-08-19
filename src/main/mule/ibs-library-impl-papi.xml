@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="ibs-library-impl-papiFlow-get-Libraries" doc:id="a399e553-21d3-467b-bb3a-9cfcf47ff1fa" >
+		<logger level="INFO" doc:name="start Logger" doc:id="4a71a0ff-5ac5-4994-b388-0ab0f7e011ba" message='#["Before system-api request call"]'/>
+		<http:request method="GET" doc:name="Get Libraries system api http Request call" doc:id="4ae7ba74-a91b-47dc-b038-c4a0fab081bb" url="https://ibs-library-management-sapi-y2xvhu.5sc6y6-3.usa-e2.cloudhub.io/api/Libraries">
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"x-correlation-id" : "2121111444",
+	"client_secret" : "2c5271FE1bEB4D1A915FAADB189015aa",
+	"client_id" : "7bdc93931c5a4e5c8b3de6199f357118"
+}]]]></http:headers>
+		</http:request>
+		<logger level="INFO" doc:name="End Logger" doc:id="d76554c1-11e2-45f7-abe5-aca6dc2a8fdd" message='#["After system-api request call"]' />
+		<ee:transform doc:name="System api call repsonse" doc:id="4070315a-12d3-46e2-be69-c3a6f25c2f8c" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+    Libraries: payload map (value,key) ->  {
+        LibraryCode: value.libraryCode,
+        LibraryBranch: value.libraryBranch,
+        totalBooks: value.totalBooks,
+        availableBooks: value.availableBooks,
+        booksRented: value.booksRented
+}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

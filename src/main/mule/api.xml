@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd ">
+   
+    <flow name="ibs-libraray-management-papi-main">
+        <http:listener config-ref="ibs-libraray-management-papi-httpListenerConfig" path="${http.path}">
+            <http:response statusCode="#[vars.httpStatus default 200]">
+                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
+            </http:response>
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[payload]]]></http:body>
+                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
+            </http:error-response>
+        </http:listener>
+        <apikit:router config-ref="ibs-libraray-management-papi-config" />
+		<error-handler ref="global-error-handler" />
+       
+    </flow>
+    <flow name="get:\Libraries:ibs-libraray-management-papi-config">
+        <logger level="INFO" doc:name="Start Logger" doc:id="ef5e471a-6ce4-495a-a161-0365b7b121c1" message='#["Process-api get libraries -Started flow"]'/>
+    </flow>
+    <flow name="get:\books:ibs-libraray-management-papi-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  libraryCode: "IBS112",
+  books: [
+    {
+      bookCode: "8K666",
+      title: "Mulesoft Mastery",
+      Author: "Salesforce",
+      bookCategory: "Tech",
+      readTimeInHrs: 65,
+      rentalPrice: "200Rs",
+      rating: 4,
+      bestSeller: "Yes"
+    }, 
+    {
+      bookCode: "8K566",
+      title: "The Half",
+      Author: "Amazon",
+      bookCategory: "Novel",
+      readTimeInHrs: 15,
+      rentalPrice: "100Rs",
+      rating: 4,
+      bestSeller: "Yes"
+    }
+  ]
+} as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="get:\Libraries\(libraryID):ibs-libraray-management-papi-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:variables>
+                <ee:set-variable variableName="libraryID">attributes.uriParams.'libraryID'</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <logger level="INFO" message="get:\Libraries\(libraryID):ibs-libraray-management-papi-config" />
+    </flow>
+    <flow name="post:\books:application\json:ibs-libraray-management-papi-config">
+        <logger level="INFO" message="post:\books:application\json:ibs-libraray-management-papi-config" />
+    </flow>
+</mule>
